@@ -45,3 +45,10 @@ def scraper(request):
 
     return render(request,'SCRAPER/result.html',{'list_address': list_address})
     
+    
+ Step 5 
+ *Links Are Saved To The Database*
+ In models.py model for database is created after which commands like "python manage.py makemigrations" and "python manage.py migrate" is used in order to make the table named under class Link here. 
+ 
+ 
+    
