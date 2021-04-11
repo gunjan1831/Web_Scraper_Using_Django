@@ -1,15 +1,18 @@
 from django.shortcuts import render
 import requests
 from bs4 import BeautifulSoup
+from .models import Link
 
 
 def scraper(request):
-    page= requests.get('https://www.google.com')
+    page= requests.get('https://www.github.com')
     soup=BeautifulSoup(page.text,'html.parser')
 
-    list_address=[]
-    for link in soup.find_all('a'):
-        list_address.append(link.get('href'))
 
-    return render(request,'SCRAPER/result.html',{'list_address': list_address})
+    for link in soup.find_all('a'):
+        link_address=link.get('href')
+        link_text=link.string
+        Link.objects.create(address=link_address, name=link_text)
+    data=Link.objects.all()
+    return render(request,'SCRAPER/result.html',{'data': data})
 
