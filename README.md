@@ -51,4 +51,26 @@ def scraper(request):
  In models.py model for database is created after which commands like "python manage.py makemigrations" and "python manage.py migrate" is used in order to make the table named under class Link here. 
  
  
+ Changes in views.py 
+     for link in soup.find_all('a'):
+        link_address=link.get('href')
+        link_text=link.string
+        Link.objects.create(address=link_address, name=link_text)     #object created
+    data=Link.objects.all()                                           #all objects extracted from db
+    return render(request,'SCRAPER/result.html',{'data': data})
+ 
+ 
+ For database to show the required changes or save the data(here in this case the links) 
+ 
+ in admins.py 
+ 
+ from .models import Link
+# Register your models here.
+
+admin.site.register(Link)
+
+
+Your extracted/scraped links are saved!
+
+ 
     
