@@ -24,3 +24,24 @@ Step 3  : Formatting Or ways to extract links in a better/ readble manner or by 
          
          for link in soup.find_all('a'):
              print(link.get('href'))
+Step 4: Now we makes views function where we request for links (web scraping) saves it in a list and connects the view function to urls.py (correct path) and templates like 
+SCRAPER/result.html is used where the formatting is done .(The way in which links will be displayed.)
+
+#Do not forget to add your app to setting.py otherwise templates will not be recognised.
+
+Code 
+from django.shortcuts import render
+import requests
+from bs4 import BeautifulSoup   #BeautifulSoup imported
+
+
+def scraper(request):
+    page= requests.get('https://www.github.com')
+    soup=BeautifulSoup(page.text,'html.parser')
+
+    list_address=[]
+    for link in soup.find_all('a'):
+        list_address.append(link.get('href'))      #links are appended to list
+
+    return render(request,'SCRAPER/result.html',{'list_address': list_address})
+    
